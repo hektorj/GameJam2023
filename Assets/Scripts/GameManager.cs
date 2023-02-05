@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         }
         //--------------------------------------------------CONTEOREGRESIVO-------------------------------------------------------------
         //esconde tutorial y MUESTRA CONTEO REGRESIVO
-        if (tutorialInPos && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.G)))
+        if (tutorialInPos && Input.GetKeyDown(KeyCode.Return))
         {
             titulo.SetActive(false);
             botonTitulo.SetActive(false);
@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
         //--------------------------------------------------SALIDA DEL JUEGO--------------------------------------------------------
         if (readyToRestart)
         {
-            if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) || Input.GetKey(KeyCode.G))       //presionar SI o NO
+            if (Input.GetKey(KeyCode.Return))       //presionar SI o NO
             {
                 if (true)//jugador elige reiniciar juego)
                 {
