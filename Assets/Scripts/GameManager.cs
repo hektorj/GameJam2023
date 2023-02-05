@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
     public ParticleSystem confeti;
     public GameObject winningsPanel;
 
+    RaycastHit2D hit;
+    Camera cam;
+    Vector3 pos;
+    Vector3 mousePos;
+    Transform focus;
+    bool isDrag;
+
     public static int score;
     public int Score
     {
@@ -59,7 +66,10 @@ public class GameManager : MonoBehaviour
 
         //----------------------------------------------------INICIO-------------------------------------------------------------------
         StartCoroutine(Intro());    //co runtina para esperar a que todos los elementos de la intro este en su lugar
+        isDrag = false;
+        cam = Camera.main;
     }
+
     void Update()
     {
         //----------------------------------------------------TUTORIAL----------------------------------------------------------------
@@ -106,6 +116,9 @@ public class GameManager : MonoBehaviour
         if (gameBegan)
         {
             //SinglePlayerGame(); AGREGAR AQUI FASE DE JUEGO
+
+
+
         }
         /*else if (gameBegan && multiplayer) POR SI ACASO HAY OTRO MODO DE JUEGO
         {
@@ -159,6 +172,27 @@ public class GameManager : MonoBehaviour
 
     }//fin de Update
 
+    void DragDop2d(){
+        if (Input.GetMouseButtonDown(0)){
+            hit = Physics2D.GetRayIntersection(cam.ScreenPointToRay(Input.mousePosition));
+
+            if (hit.collider != null)
+            {
+                focus = hit.transform;
+                print("Clicked " + hit.collider.transform.name);
+                isDrag = true;
+            }
+
+        }else if (Input.GetMouseButtonUp(0) && isDrag == true){
+            isDrag = false;
+        }else if (isDrag == true){
+            mousePos = Input.mousePosition;
+            mousePos.z = -cam.transform.position.z;
+            pos = cam.ScreenToWorldPoint(mousePos);
+
+            focus.position = new Vector3(pos.x, pos.y, focus.position.z);
+        }
+    }
 
     IEnumerator Timer(float delay, int remainingTime)
     {
