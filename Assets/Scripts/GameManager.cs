@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public GameManager instance = null;
+    public static GameManager instance = null;
 
     public GameObject titulo;
     public GameObject botonTitulo; 
@@ -130,7 +130,6 @@ public class GameManager : MonoBehaviour
         //------------------------------------------------------PREMIOS-----------------------------------------------------------------
         if (winningsInPos && readyToShowWinnings)
         {
-            float earnedPercent;
             winningsInPos = false;
             Debug.Log("mostrando puntaje final");
             gameOverText.SetActive(false);
