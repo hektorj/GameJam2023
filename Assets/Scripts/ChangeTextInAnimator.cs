@@ -21,7 +21,7 @@ public class ChangeTextInAnimator : MonoBehaviour
         {
             GameManager.instance.countdownDone = true;
             intText = 4;
-            //countDownText.gameObject.GetComponent<Animator>().StopPlayback();
+            Debug.Log("termina conteo");
         }
         else
             return;
