@@ -89,5 +89,23 @@ public class GameMaster : MonoBehaviour {
         yield return new WaitForSeconds(3);
         showGeneratedRecipe();
     }
-    
+
+    void CheckUniqueness(int[] gameRecipe)
+    {
+        var uniqueValues = new HashSet<int>();
+        int i = 0;
+        foreach (int d in gameRecipe)
+        {
+            if (uniqueValues.Contains(d))
+            {
+                while (d == gameRecipe[i])
+                {
+                    gameRecipe[i] = Random.Range(0, 27);
+                }
+            }
+            uniqueValues.Add(d);
+            i++;
+        }
+        //return true;
+    }
 }
