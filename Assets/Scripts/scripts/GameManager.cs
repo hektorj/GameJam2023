@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {/*
         //----------------------------------------------------TUTORIAL----------------------------------------------------------------
         //Esconde titulo y MUESTRA el TUTORIAL 
         if (introInPos && (Input.GetKeyDown(KeyCode.Return)))
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
             etapa = 0;
             Debug.Log("etapa: " + etapa + 1);
         }
-
+        */
         if (gameBegan)
         {
             //SinglePlayerGame(); AGREGAR AQUI FASE DE JUEGO
