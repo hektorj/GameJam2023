@@ -21,7 +21,9 @@ public class TriggerOnElements : MonoBehaviour
     {
         if(overCaldero)
         {
-            Debug.Log("Puntos");
+            Debug.Log(this.name);
+            GameManager.instance.VerificarItemEnCaldero(this.name);
+            //Debug.Log("Puntos");
         }
     }
 
@@ -30,9 +32,9 @@ public class TriggerOnElements : MonoBehaviour
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(collision.CompareTag("caldero"))
+        if(other.CompareTag("caldero"))
         {
             overCaldero = true;
         }
@@ -43,6 +45,8 @@ public class TriggerOnElements : MonoBehaviour
         if (collision.CompareTag("caldero"))
         {
             overCaldero = false;
+            Debug.Log("sale de caldero");
         }
     }
+
 }

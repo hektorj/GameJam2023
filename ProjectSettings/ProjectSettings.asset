@@ -811,11 +811,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: c641e84e-6ab1-4594-8ecb-0309a27a8b9c
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: GameJam2023
+  organizationId: exbas
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

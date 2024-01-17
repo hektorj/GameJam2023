@@ -27,7 +27,7 @@ public class TweenInAndOut : MonoBehaviour
 
     public Objetos[] objetos;
 
-    private void Start()
+    private void OnEnable()
     {
         foreach (Objetos obj in objetos)
         {

@@ -20,12 +20,20 @@ public class GameManager : MonoBehaviour
     public int maxTime;
     public TextMeshPro scoreText;
     public GameObject gameElements;
+    public GameObject[] items;
+    public List<int> combinacion;
+    public List<int> combinacionJugador;
     //public GameObject caldero;
     public GameObject gameOverText;
     //public ParticleSystem confeti;
     public GameObject winningsPanel;
     public TextMeshPro punajeFinal;
     public GameObject panelRetry;
+    [Space(10)]
+    [Header("Panel Combinaciones")]
+    public GameObject panelCombinaciones;
+    public SpriteRenderer elemento1;
+    public SpriteRenderer elemento2;
 
     RaycastHit2D hit;
     Camera cam;
@@ -60,6 +68,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool introDone = false;
 
     private Coroutine timerCoroutine;
+    private bool combinacionHecha = false;
+    private int nivel = 2;
+    private bool movimientosHechos;
+    private bool correcto;
 
     private void Awake()
     {
@@ -74,9 +86,10 @@ public class GameManager : MonoBehaviour
         Score = 0;
         introDone = false;
         //----------------------------------------------------INICIO-------------------------------------------------------------------
-        StartCoroutine(Intro());    //co runtina para esperar a que todos los elementos de la intro este en su lugar
+        //StartCoroutine(Intro());    //co runtina para esperar a que todos los elementos de la intro este en su lugar
         isDrag = false;
         cam = Camera.main;
+        gameBegan = true;//TEST
     }
 
     void Update()
@@ -136,9 +149,19 @@ public class GameManager : MonoBehaviour
         */
         if (gameBegan)
         {
-            //SinglePlayerGame(); AGREGAR AQUI FASE DE JUEGO
-
-
+            if (!combinacionHecha)
+            {
+                GenerarCombinacion();
+                StartCoroutine(MostrarCombinacion());
+            }
+            if(combinacionHecha)
+            {
+                if(movimientosHechos)
+                {
+                    VerificarMatch();
+                }
+                //Juego();
+            }
 
         }
         /*else if (gameBegan && multiplayer) POR SI ACASO HAY OTRO MODO DE JUEGO
@@ -248,6 +271,83 @@ public class GameManager : MonoBehaviour
         gameBegan = false;
         gameOver = true;
         Debug.Log("gameOver");
+    }
+
+    void GenerarCombinacion()
+    {
+        combinacion.Clear();
+        while (combinacion.Count < 2)
+        {
+            int randomNumber = Random.Range(0, 27); // Genera un número aleatorio entre 0 y 26.
+
+            // Verifica si el número ya ha sido generado antes.
+            if (!combinacion.Contains(randomNumber))
+            {
+                combinacion.Add(randomNumber);
+            }
+        }
+        
+        for (int i = 0; i < nivel; i++)
+        {
+            Debug.Log(combinacion[i] + "item: " + items[combinacion[i]].name);//muestra contenido de la lista
+        }
+
+        combinacionHecha = true;
+    }
+
+    IEnumerator MostrarCombinacion()
+    {
+        panelCombinaciones.SetActive(true);
+        elemento1.sprite = items[combinacion[0]].GetComponent<SpriteRenderer>().sprite;
+        elemento2.sprite = items[combinacion[1]].GetComponent<SpriteRenderer>().sprite;
+
+        yield return new WaitForSeconds(2f);
+
+        panelCombinaciones.GetComponent<TweenInAndOut>().HideGameObject();
+        //AQUI INICIAR TIMER
+
+        yield return new WaitForSeconds(0.8f);
+
+        panelCombinaciones.SetActive(false);
+    }
+
+    public void VerificarItemEnCaldero(string itemName)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].name == itemName)
+            {
+                combinacionJugador.Add(i);
+                Debug.Log("item captado: " + items[i].name + "\n indice: " + i);
+            }
+        }
+        if(combinacionJugador.Count == nivel)
+        {
+            movimientosHechos = true;
+        }
+    }
+
+    public void VerificarMatch()
+    {
+        movimientosHechos = false;
+
+        foreach (var item in combinacionJugador)
+        {
+            if (combinacion.Contains(item))
+                correcto = true;
+            else
+                correcto = false;
+        }
+
+        if (correcto)
+            Debug.Log("puntos");
+        else
+            Debug.Log("incorrecto");
+
+        items[combinacionJugador[0]].GetComponent<TweenInAndOut>().HideGameObject();
+        items[combinacionJugador[1]].GetComponent<TweenInAndOut>().HideGameObject();
+        combinacionJugador.Clear();
+        combinacionHecha = false;
     }
 
     //----DELAYERS----
